@@ -1,0 +1,24 @@
+body{
+  margin: 0px;
+  padding: 0px;
+
+  background-color: #dddddd;
+}
+
+.content{
+  background-color: #ffffff;
+
+  margin: 0 auto;
+  width: 854px;
+  height: 480px;
+}
+
+.toolbar{
+  background-color: #009900;
+  height: 40px;
+}
+
+.canvas{
+  width: 854px;
+  height: 480px;
+}

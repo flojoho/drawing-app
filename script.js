@@ -35,7 +35,7 @@ canvas.addEventListener('mousedown', e => {
   lastY = e.offsetY;
 
   currentPath.push({ x: e.offsetX,
-              y: e.offsetY });
+                     y: e.offsetY });
 });
 
 canvas.addEventListener('mouseup', () => {
@@ -49,7 +49,7 @@ canvas.addEventListener('mouseup', () => {
 canvas.addEventListener('mousemove', e => {
   if(mouseIsDown){
     currentPath.push({ x: e.offsetX,
-                y: e.offsetY });
+                       y: e.offsetY });
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
