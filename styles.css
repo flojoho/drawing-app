@@ -1,24 +1,82 @@
 body{
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
 
   background-color: #dddddd;
+
+  display: flex;
+  justify-content: center;
 }
+
+canvas {
+  display: block;
+}
+
+
+
+#toolbar{
+  background-color: #009900;
+}
+#toolbar button {
+  height: 30px;
+}
+
+#image-list{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+#image-list li{
+  background-color: #00ff00;
+  margin: 10px;
+}
+#image-list li a canvas {
+  
+  margin: 0;
+  padding: 0;
+}
+
+#add-link {
+  display: flex;
+
+  width: 200px;
+  height: 150px;
+
+  /*border: 10px #000000 solid;*/
+  box-shadow:inset 0px 0px 0px 5px #000000;
+
+  margin: 10px;
+  padding: 0px;
+
+  font-size: 100px;
+  font-weight: bold;
+
+  justify-content: center;
+  align-items: center;
+
+}
+
+#thumb-template{
+  display: none;
+}
+
+
 
 .content{
+  display: flex;
+  background-color: #95a0ff;
+}
+
+.thumbnail {
+  width: 200px;
+  height: 150;
+
   background-color: #ffffff;
-
-  margin: 0 auto;
-  width: 854px;
-  height: 480px;
 }
 
-.toolbar{
-  background-color: #009900;
-  height: 40px;
+.thumb-menu {
+  display: flex;
 }
-
-.canvas{
-  width: 854px;
-  height: 480px;
+.thumb-menu button{
+  width: 50%;
+  height: 30px;
 }
