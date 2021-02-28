@@ -1,5 +1,5 @@
 # drawing-app
 
-live version: flojoho.github.io/drawing-app/
+live version: https://flojoho.github.io/drawing-app/
 
 draw on the canvas by holding down the left mouse button. drawings gets saved to localStorage automatically and loaded again if you revisit the page.
