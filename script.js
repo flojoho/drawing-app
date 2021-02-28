@@ -12,37 +12,33 @@ const renderNewThumbDiv = (id) => {
   newThumb.id = id;
 
   imageList.appendChild(newThumb);
-
-  //verstecken des klons deaktivieren
-  //> draw thumbnail on respective canvas (localData.getPaths(id))
-
-  drawPaths(document.getElementById(id).querySelector('canvas').getContext('2d'), localData.getPaths(id));
+  const thumbCanvasCtx = document.getElementById(id).querySelector('canvas').getContext('2d');
+  drawPaths(thumbCanvasCtx, localData.getPaths(id));
 }
 
 
 
 
-for(id in localData.getDrawings()){
+for(const id in localData.getDrawings()) {
   renderNewThumbDiv(id);
 }
 
 
 const openedImage = (() => {
-  //openedImage.hasUnsavedChanges
   let id;
   let thumbDiv;
   let thumbCtx;
 
   return {
-    getId(){
+    getId() {
       return id;
     },
 
-    getThumbCtx(){
+    getThumbCtx() {
       return thumbCtx;
     },
 
-    change(newId){
+    change(newId) {
       id = newId;
       thumbDiv = document.getElementById(newId);
       thumbCtx = thumbDiv.querySelector('canvas').getContext('2d');
@@ -56,18 +52,18 @@ const openedImage = (() => {
 
 
 
-function drawPaths(context, paths){ //can't i leave out the context since i'm always drawing to the main canvas?
+function drawPaths(context, paths) { // can't i leave out the context since i'm always drawing to the main canvas?
   context.lineJoin = 'round';
   context.lineCap = 'round';
   
   context.strokeStyle = '#000000';
   context.lineWidth = 10;
 
-  context.fillStyle = '#ffffff';
+  context.fillStyle = 'white';
   context.fillRect(0, 0, context.canvas.clientWidth, context.canvas.clientHeight);
   
   for (const path of paths){
-    for (let i = 1; i < path.length; i++){
+    for (let i = 1; i < path.length; i++) {
       context.beginPath();
       context.moveTo(path[i - 1].x, path[i - 1].y);
       context.lineTo(path[i].x, path[i].y);
@@ -77,7 +73,8 @@ function drawPaths(context, paths){ //can't i leave out the context since i'm al
 }
 
 
-openedImage.change(0);
+const drawings = localData.getDrawings();
+openedImage.change(Object.keys(drawings)[0]);
 drawPaths(ctx, localData.getPaths(openedImage.getId()));
 
 
@@ -87,11 +84,29 @@ drawPaths(ctx, localData.getPaths(openedImage.getId()));
 
 
 imageList.addEventListener('click', e => {
-  if(e.target.className === 'open-button' || e.target.tagName.toLowerCase() === 'canvas'){
-    openedImage.change(e.target.parentElement.parentElement.id);
+  const clickedImageId = e.target.parentElement.parentElement.id;
+
+  if(e.target.className === 'open-button' || e.target.tagName.toLowerCase() === 'canvas') {
+    openedImage.change(clickedImageId);
     drawPaths(ctx, localData.getPaths(openedImage.getId()));
-  }else if(e.target.className === 'delete-button'){
-    alert('sorry, the feature for deleting drawings is going to be added soon');
+    return;
+  }
+
+  if(e.target.className === 'delete-button') {
+    const drawings = localData.getDrawings();
+
+    if(Object.keys(drawings).length > 1) {
+      if(confirm('Are you sure you want to delete this drawing?')) {
+        delete drawings[clickedImageId];
+        localData.updateDrawings(drawings);
+        document.getElementById(clickedImageId).remove();
+
+        openedImage.change(Object.keys(drawings)[0]);
+        drawPaths(ctx, localData.getPaths(openedImage.getId()));
+      }
+    } else {
+      alert('Sorry, but there has to be at least one drawing!');
+    }
   }
 });
 
@@ -105,7 +120,6 @@ addLink.addEventListener('click', () => {
 
   drawPaths(ctx, []);
   openedImage.change(newId);
-  //openedImage.getThumbCtx() = thumbTemplate.querySelector('canvas').getContext('2d');
 });
 
 

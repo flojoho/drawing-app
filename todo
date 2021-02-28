@@ -1,0 +1,25 @@
+
+
+INBOX
+
+
+
+
+
+
+
+refactor localData file to use es6 modules
+
+add dedicated delete function to localData.js?
+
+refactoring ua css
+
+
+
+
+
+
+implement manual saving? (+ check for unsaved changes when leaving / switching image)
+
+undo functionality?
+

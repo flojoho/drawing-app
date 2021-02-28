@@ -3,7 +3,7 @@ const localData = (() => {
 
   const localEntry = localStorage.getItem('drawing app');
 
-  if (typeof localEntry === 'string'){
+  if (typeof localEntry === 'string') {
     data = JSON.parse(localEntry);
   } else {
     data = {
@@ -16,11 +16,11 @@ const localData = (() => {
 
 
   return {
-    getPaths(id){
+    getPaths(id) {
       return data.drawings[id];
     },
     
-    getDrawings(){
+    getDrawings() {
       return data.drawings;
     },
 
@@ -28,24 +28,23 @@ const localData = (() => {
       localStorage.setItem('drawing app', JSON.stringify(data));
     },
 
-    addPathToDrawing(id, path){
+    addPathToDrawing(id, path) {
       data.drawings[id].push(path);
       this.save();
     },
 
-    updateDrawings(drawings){
+    updateDrawings(drawings) {
       data.drawings = drawings;
       this.save();
     },
 
-    getUniqueId(){
+    getUniqueId() {
       const newId = ++data.currentId;
-      console.log(data.currentId);
       //this.save();
       return newId;
     },
 
-    createDrawing(){
+    createDrawing() {
       const newId = this.getUniqueId();
       data.drawings[newId] = [];
       this.save();
