@@ -2,31 +2,11 @@
 <html>
   <head>
     <title>drawing app</title>
-    <script src="localData.js" defer></script>
-    <script src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="content">
-      <div>
-        <div id="toolbar">
-        </div>
-        <canvas id="canvas" width="600" height="450"></canvas>
-      </div>
-      <div class="sidebar">
-        <ul id="image-list">
-          <li id="thumb-template">
-            <a href="#">
-              <canvas id="thumb" class="thumbnail" width="600" height="450"></canvas>
-            </a>
-            <div class="thumb-menu">
-              <button class="open-button">open</button>
-              <button class="delete-button">delete</button>
-            </div>
-          </li>
-        </ul>
-        <a href="#" id="add-link">+</a>
-      </div>
-    </div>
+    <script src="script.js" defer></script>
+
+    <canvas id="canvas"></canvas>
   </body>
 </html>
