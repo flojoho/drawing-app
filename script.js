@@ -1,58 +1,68 @@
-const thumbTemplate = document.getElementById('thumb-template');
-const imageList = document.getElementById('image-list');
-const addLink = document.getElementById('add-link');
 
-const ctx = canvas.getContext('2d');
+const image = document.getElementById('image');
 
+const redrawPath = (currentPath) => {
+  const { svgPath, points } = currentPath;
 
-function makeCanvasFullScreen() {
-  ctx.canvas.width = window.innerWidth;
-  ctx.canvas.height = window.innerHeight;
+  const pathString = 'M ' + points.map(point => `${point.x} ${point.y}`).join(' L ');
+
+  svgPath.setAttributeNS(null, 'd', pathString);
+  svgPath.setAttributeNS(null, 'stroke', 'black');
+  svgPath.setAttributeNS(null, 'fill', 'none');
+  svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
+  image.appendChild(svgPath);
 }
-window.addEventListener('resize', () => {
-  makeCanvasFullScreen()
-});
-makeCanvasFullScreen()
 
+const addPointToPath = (currentPath, mouseX, mouseY) => {
+
+  console.log(image.getBoundingClientRect())
+
+  const { width, height } = image.getBoundingClientRect();
+  
+  svgX = mouseX * 160 / width;
+  svgY = mouseY * 90 / height;
+
+  currentPath.points.push({
+    x: svgX,
+    y: svgY
+  });
+}
 
 let mouseIsDown = false;
 
 let lastX;
 let lastY;
-let currentPath = [];
+const paths = [];
+let currentPath = {
+  points: []
+};
 
-canvas.addEventListener('mousedown', e => {
+image.addEventListener('mousedown', e => {
   mouseIsDown = true;
   lastX = e.offsetX;
   lastY = e.offsetY;
 
-  currentPath.push({ x: e.offsetX,
-                     y: e.offsetY });
+  addPointToPath(currentPath, e.offsetX, e.offsetY);
+                     
+  const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  currentPath.svgPath = svgPath;
 });
 
-canvas.addEventListener('mouseup', () => {
+image.addEventListener('mouseup', () => {
   mouseIsDown = false;
-  currentPath = [];
+  currentPath = {
+    points: []
+  };
 
 });
 
-canvas.addEventListener('mousemove', e => {
+image.addEventListener('mousemove', e => {
   if(mouseIsDown) {
-    currentPath.push({ x: e.offsetX,
-                       y: e.offsetY });
-                       
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 10;
-
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
+    addPointToPath(currentPath, e.offsetX, e.offsetY)
+    
+    redrawPath(currentPath);
     
     lastX = e.offsetX;
     lastY = e.offsetY;
   }
 });
-
