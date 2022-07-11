@@ -10,6 +10,7 @@ const redrawPath = (currentPath) => {
   svgPath.setAttributeNS(null, 'stroke', 'black');
   svgPath.setAttributeNS(null, 'fill', 'none');
   svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
+  svgPath.setAttributeNS(null, 'stroke-linejoin', 'round');
   image.appendChild(svgPath);
 }
 
