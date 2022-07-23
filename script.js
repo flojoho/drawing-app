@@ -47,6 +47,7 @@ const redrawPath = (currentPath) => {
   svgPath.setAttributeNS(null, 'd', pathString);
   svgPath.setAttributeNS(null, 'stroke', 'black');
   svgPath.setAttributeNS(null, 'fill', 'none');
+  svgPath.setAttributeNS(null, 'stroke-width', '1.4');
   svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
   svgPath.setAttributeNS(null, 'stroke-linejoin', 'round');
   image.appendChild(svgPath);
@@ -65,7 +66,6 @@ const addPointToPath = (currentPath, mouseX, mouseY) => {
   const svgY = mouseY * 90 / height;
 
   currentPath.points.push(new Vector(svgX, svgY));
-  
 }
 
 let mouseIsDown = false;
