@@ -1,24 +1,6 @@
+import Vector from './Vector.js'
 
 const image = document.getElementById('image');
-
-class Vector {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  to(vector) {
-    return new Vector(vector.x - this.x, vector.y - this.y);
-  }
-
-  scale(factor) {
-    return new Vector(this.x * factor, this.y * factor);
-  }
-
-  plus(vector) {
-    return new Vector(this.x + vector.x, this.y + vector.y);
-  }
-}
 
 const curveFromPoints = (points) => {
   const controlFactor = 0.3;
@@ -79,8 +61,8 @@ const addPointToPath = (currentPath, mouseX, mouseY) => {
 
   const { width, height } = image.getBoundingClientRect();
   
-  svgX = mouseX * 160 / width;
-  svgY = mouseY * 90 / height;
+  const svgX = mouseX * 160 / width;
+  const svgY = mouseY * 90 / height;
 
   currentPath.points.push(new Vector(svgX, svgY));
   
