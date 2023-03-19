@@ -1,6 +1,8 @@
-import Vector from './Vector.js'
+import Vector from './Vector.js';
 
 const image = document.getElementById('image');
+
+const lineWidth = 10;
 
 const curveFromPoints = (points) => {
   const controlFactor = 0.3;
@@ -8,7 +10,7 @@ const curveFromPoints = (points) => {
   const segments = [];
   for(let i = 0; i < points.length - 1; i++) {
 
-    const point1 = points[i]
+    const point1 = points[i];
     const point2 = points[i + 1];
     let relativeControlPoint1, relativeControlPoint2;
 
@@ -47,7 +49,7 @@ const redrawPath = (currentPath) => {
   svgPath.setAttributeNS(null, 'd', pathString);
   svgPath.setAttributeNS(null, 'stroke', 'black');
   svgPath.setAttributeNS(null, 'fill', 'none');
-  svgPath.setAttributeNS(null, 'stroke-width', '15');
+  svgPath.setAttributeNS(null, 'stroke-width', `${lineWidth}px`);
   svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
   svgPath.setAttributeNS(null, 'stroke-linejoin', 'round');
   image.appendChild(svgPath);
@@ -58,14 +60,20 @@ const redrawPath = (currentPath) => {
 //   svgPath: document.createElementNS('http://www.w3.org/2000/svg', 'path')
 // })
 
-const addPointToPath = (currentPath, mouseX, mouseY) => {
-
+const coordinateTransformation = (mouseX, mouseY) => {
   const { width, height } = image.getBoundingClientRect();
-  
+
   const svgX = mouseX * 1920 / width;
   const svgY = mouseY * 1080 / height;
 
-  currentPath.points.push(new Vector(svgX, svgY));
+  return { x: svgX, y: svgY }
+}
+
+const addPointToPath = (currentPath, mouseX, mouseY) => {
+  
+  const {x, y} = coordinateTransformation(mouseX, mouseY);
+
+  currentPath.points.push(new Vector(x, y));
 }
 
 let mouseIsDown = false;
@@ -77,10 +85,23 @@ let currentPath = {
   points: []
 };
 
+const drawCircle = (mouseX, mouseY) => {
+  const {x, y} = coordinateTransformation(mouseX, mouseY);
+  
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttributeNS(null, 'cx', x);
+  circle.setAttributeNS(null, 'cy', y);
+  circle.setAttributeNS(null, 'r', lineWidth/2);
+  circle.setAttributeNS(null, 'style', 'fill: black; stroke: none' );
+  image.appendChild(circle);
+}
+
 image.addEventListener('mousedown', e => {
   mouseIsDown = true;
   lastX = e.offsetX;
   lastY = e.offsetY;
+
+  drawCircle(e.offsetX, e.offsetY);
 
   addPointToPath(currentPath, e.offsetX, e.offsetY);
                      
