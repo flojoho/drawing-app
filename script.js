@@ -47,7 +47,7 @@ const redrawPath = (currentPath) => {
   const pathString = curveFromPoints(points);
 
   svgPath.setAttributeNS(null, 'd', pathString);
-  svgPath.setAttributeNS(null, 'stroke', 'black');
+  svgPath.setAttributeNS(null, 'stroke', 'white');
   svgPath.setAttributeNS(null, 'fill', 'none');
   svgPath.setAttributeNS(null, 'stroke-width', `${lineWidth}px`);
   svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
@@ -92,7 +92,7 @@ const drawCircle = (mouseX, mouseY) => {
   circle.setAttributeNS(null, 'cx', x);
   circle.setAttributeNS(null, 'cy', y);
   circle.setAttributeNS(null, 'r', lineWidth/2);
-  circle.setAttributeNS(null, 'style', 'fill: black; stroke: none' );
+  circle.setAttributeNS(null, 'style', 'fill: white; stroke: none' );
   image.appendChild(circle);
 }
 
