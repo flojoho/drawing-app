@@ -1,6 +1,6 @@
 import Vector from './Vector.js';
 
-const image = document.getElementById('image');
+const svgImage = document.getElementById('svg-image');
 
 const lineWidth = 10;
 
@@ -52,7 +52,7 @@ const redrawPath = (currentPath) => {
   svgPath.setAttributeNS(null, 'stroke-width', `${lineWidth}px`);
   svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
   svgPath.setAttributeNS(null, 'stroke-linejoin', 'round');
-  image.appendChild(svgPath);
+  svgImage.appendChild(svgPath);
 }
 
 // redrawPath({
@@ -61,7 +61,7 @@ const redrawPath = (currentPath) => {
 // })
 
 const coordinateTransformation = (mouseX, mouseY) => {
-  const { width, height } = image.getBoundingClientRect();
+  const { width, height } = svgImage.getBoundingClientRect();
 
   const svgX = mouseX * 1920 / width;
   const svgY = mouseY * 1080 / height;
@@ -78,14 +78,12 @@ const addPointToPath = (currentPath, mouseX, mouseY) => {
 
 let mouseIsDown = false;
 
-let lastX;
-let lastY;
 const paths = [];
 let currentPath = {
   points: []
 };
 
-const drawCircle = (mouseX, mouseY) => {
+const drawDot = (mouseX, mouseY) => {
   const {x, y} = coordinateTransformation(mouseX, mouseY);
   
   const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -93,15 +91,13 @@ const drawCircle = (mouseX, mouseY) => {
   circle.setAttributeNS(null, 'cy', y);
   circle.setAttributeNS(null, 'r', lineWidth/2);
   circle.setAttributeNS(null, 'style', 'fill: white; stroke: none' );
-  image.appendChild(circle);
+  svgImage.appendChild(circle);
 }
 
-image.addEventListener('mousedown', e => {
+svgImage.addEventListener('mousedown', e => {
   mouseIsDown = true;
-  lastX = e.offsetX;
-  lastY = e.offsetY;
 
-  drawCircle(e.offsetX, e.offsetY);
+  drawDot(e.offsetX, e.offsetY);
 
   addPointToPath(currentPath, e.offsetX, e.offsetY);
                      
@@ -109,7 +105,7 @@ image.addEventListener('mousedown', e => {
   currentPath.svgPath = svgPath;
 });
 
-image.addEventListener('mouseup', () => {
+svgImage.addEventListener('mouseup', () => {
   mouseIsDown = false;
   currentPath = {
     points: []
@@ -117,13 +113,10 @@ image.addEventListener('mouseup', () => {
 
 });
 
-image.addEventListener('mousemove', e => {
+svgImage.addEventListener('mousemove', e => {
   if(mouseIsDown) {
     addPointToPath(currentPath, e.offsetX, e.offsetY)
     
     redrawPath(currentPath);
-    
-    lastX = e.offsetX;
-    lastY = e.offsetY;
   }
 });
