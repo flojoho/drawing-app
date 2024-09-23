@@ -1,19 +1,22 @@
 
 class Vector {
-  constructor(x, y) {
+  public x: number;
+  public y: number;
+  
+  constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
   }
 
-  to(vector) {
+  to(vector: Vector) {
     return new Vector(vector.x - this.x, vector.y - this.y);
   }
 
-  scale(factor) {
+  scale(factor: number) {
     return new Vector(this.x * factor, this.y * factor);
   }
 
-  plus(vector) {
+  plus(vector: Vector) {
     return new Vector(this.x + vector.x, this.y + vector.y);
   }
 }

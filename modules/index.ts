@@ -1,10 +1,15 @@
 import Vector from './Vector.js';
 
-const svgImage = document.getElementById('svg-image');
+const svgImage = document.getElementById('svg-image')!;
 
 const lineWidth = 10;
 
-const curveFromPoints = (points) => {
+type CurrentPath = {
+  points: Vector[],
+  svgPath?: SVGPathElement
+}
+
+const curveFromPoints = (points: Vector[]) => {
   const controlFactor = 0.3;
 
   const segments = [];
@@ -41,7 +46,7 @@ const curveFromPoints = (points) => {
 
 }
 
-const redrawPath = (currentPath) => {
+const redrawPath = (currentPath: CurrentPath) => {
   const { svgPath, points } = currentPath;
 
   const pathString = curveFromPoints(points);
@@ -60,7 +65,7 @@ const redrawPath = (currentPath) => {
 //   svgPath: document.createElementNS('http://www.w3.org/2000/svg', 'path')
 // })
 
-const coordinateTransformation = (mouseX, mouseY) => {
+const coordinateTransformation = (mouseX: number, mouseY: number) => {
   const { width, height } = svgImage.getBoundingClientRect();
 
   const svgX = mouseX * 1920 / width;
@@ -69,7 +74,7 @@ const coordinateTransformation = (mouseX, mouseY) => {
   return { x: svgX, y: svgY }
 }
 
-const addPointToPath = (currentPath, mouseX, mouseY) => {
+const addPointToPath = (currentPath: CurrentPath, mouseX: number, mouseY: number) => {
   
   const {x, y} = coordinateTransformation(mouseX, mouseY);
 
@@ -79,17 +84,17 @@ const addPointToPath = (currentPath, mouseX, mouseY) => {
 let mouseIsDown = false;
 
 const paths = [];
-let currentPath = {
+let currentPath: CurrentPath = {
   points: []
 };
 
-const drawDot = (mouseX, mouseY) => {
+const drawDot = (mouseX: number, mouseY: number) => {
   const {x, y} = coordinateTransformation(mouseX, mouseY);
   
   const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  circle.setAttributeNS(null, 'cx', x);
-  circle.setAttributeNS(null, 'cy', y);
-  circle.setAttributeNS(null, 'r', lineWidth/2);
+  circle.setAttributeNS(null, 'cx', String(x));
+  circle.setAttributeNS(null, 'cy', String(y));
+  circle.setAttributeNS(null, 'r', String(lineWidth/2));
   circle.setAttributeNS(null, 'style', 'fill: white; stroke: none' );
   svgImage.appendChild(circle);
 }

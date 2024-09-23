@@ -65,9 +65,9 @@ let currentPath = {
 const drawDot = (mouseX, mouseY) => {
     const { x, y } = coordinateTransformation(mouseX, mouseY);
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttributeNS(null, 'cx', x);
-    circle.setAttributeNS(null, 'cy', y);
-    circle.setAttributeNS(null, 'r', lineWidth / 2);
+    circle.setAttributeNS(null, 'cx', String(x));
+    circle.setAttributeNS(null, 'cy', String(y));
+    circle.setAttributeNS(null, 'r', String(lineWidth / 2));
     circle.setAttributeNS(null, 'style', 'fill: white; stroke: none');
     svgImage.appendChild(circle);
 };
