@@ -1,13 +1,9 @@
 import Vector from './Vector.js';
+import Path from './Path.js';
 
 const svgImage = document.getElementById('svg-image')!;
 
 const lineWidth = 10;
-
-type CurrentPath = {
-  points: Vector[],
-  svgPath?: SVGPathElement
-}
 
 const curveFromPoints = (points: Vector[]) => {
   const controlFactor = 0.3;
@@ -46,8 +42,8 @@ const curveFromPoints = (points: Vector[]) => {
 
 }
 
-const redrawPath = (currentPath: CurrentPath) => {
-  const { svgPath, points } = currentPath;
+const redrawPath = (path: Path) => {
+  const { svgPath, points, parentSvg } = path;
 
   const pathString = curveFromPoints(points);
 
@@ -57,13 +53,9 @@ const redrawPath = (currentPath: CurrentPath) => {
   svgPath.setAttributeNS(null, 'stroke-width', `${lineWidth}px`);
   svgPath.setAttributeNS(null, 'stroke-linecap', 'round');
   svgPath.setAttributeNS(null, 'stroke-linejoin', 'round');
-  svgImage.appendChild(svgPath);
-}
 
-// redrawPath({
-//   points: [new Vector(40, 40), new Vector(80, 40), new Vector(80, 80), new Vector(120, 80)],
-//   svgPath: document.createElementNS('http://www.w3.org/2000/svg', 'path')
-// })
+  parentSvg.appendChild(svgPath);
+}
 
 const coordinateTransformation = (mouseX: number, mouseY: number) => {
   const { width, height } = svgImage.getBoundingClientRect();
@@ -74,19 +66,15 @@ const coordinateTransformation = (mouseX: number, mouseY: number) => {
   return { x: svgX, y: svgY }
 }
 
-const addPointToPath = (currentPath: CurrentPath, mouseX: number, mouseY: number) => {
-  
+const addPointToPath = (path: Path, mouseX: number, mouseY: number) => {
   const {x, y} = coordinateTransformation(mouseX, mouseY);
-
-  currentPath.points.push(new Vector(x, y));
+  path.points.push(new Vector(x, y));
 }
 
 let mouseIsDown = false;
 
 const paths = [];
-let currentPath: CurrentPath = {
-  points: []
-};
+let currentPath = new Path(svgImage);
 
 const drawDot = (mouseX: number, mouseY: number) => {
   const {x, y} = coordinateTransformation(mouseX, mouseY);
@@ -105,16 +93,11 @@ svgImage.addEventListener('mousedown', e => {
   drawDot(e.offsetX, e.offsetY);
 
   addPointToPath(currentPath, e.offsetX, e.offsetY);
-                     
-  const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  currentPath.svgPath = svgPath;
 });
 
 svgImage.addEventListener('mouseup', () => {
   mouseIsDown = false;
-  currentPath = {
-    points: []
-  };
+  currentPath = new Path(svgImage);
 
 });
 
