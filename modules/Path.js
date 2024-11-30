@@ -4,5 +4,7 @@ class Path {
         this.svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         this.parentSvg = parentSvg;
     }
+    addPoint() {
+    }
 }
 export default Path;

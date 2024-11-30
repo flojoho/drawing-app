@@ -63,11 +63,10 @@ const coordinateTransformation = (mouseX: number, mouseY: number) => {
   const svgX = mouseX * 1920 / width;
   const svgY = mouseY * 1080 / height;
 
-  return { x: svgX, y: svgY }
+  return { x: svgX, y: svgY };
 }
 
-const addPointToPath = (path: Path, mouseX: number, mouseY: number) => {
-  const {x, y} = coordinateTransformation(mouseX, mouseY);
+const addPointToPath = (path: Path, x: number, y: number) => {
   path.points.push(new Vector(x, y));
 }
 
@@ -76,9 +75,7 @@ let mouseIsDown = false;
 const paths = [];
 let currentPath = new Path(svgImage);
 
-const drawDot = (mouseX: number, mouseY: number) => {
-  const {x, y} = coordinateTransformation(mouseX, mouseY);
-  
+const drawDot = (x: number, y: number) => {
   const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
   circle.setAttributeNS(null, 'cx', String(x));
   circle.setAttributeNS(null, 'cy', String(y));
@@ -90,9 +87,9 @@ const drawDot = (mouseX: number, mouseY: number) => {
 svgImage.addEventListener('mousedown', e => {
   mouseIsDown = true;
 
-  drawDot(e.offsetX, e.offsetY);
-
-  addPointToPath(currentPath, e.offsetX, e.offsetY);
+  const {x, y} = coordinateTransformation(e.offsetX, e.offsetY);
+  drawDot(x, y);
+  addPointToPath(currentPath, x, y);
 });
 
 svgImage.addEventListener('mouseup', () => {
@@ -103,7 +100,8 @@ svgImage.addEventListener('mouseup', () => {
 
 svgImage.addEventListener('mousemove', e => {
   if(mouseIsDown) {
-    addPointToPath(currentPath, e.offsetX, e.offsetY)
+    const {x, y} = coordinateTransformation(e.offsetX, e.offsetY);
+    addPointToPath(currentPath, x, y)
     
     redrawPath(currentPath);
   }
