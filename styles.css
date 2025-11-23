@@ -1,8 +1,9 @@
 :root {
-  --white: hsl(0, 0%, 100%);
-  --light-gray: #DDDDDD;
-  --gray: hsl(0, 0%, 40%);
-  --dark-gray: hsl(0, 0%, 15%);
+  --white: hsl(0 0% 100%);
+  --light-gray: hsl(0 0% 50%);
+  --gray: hsl(0 0% 40%);
+  --dark-gray: hsl(0 0% 15%);
+  --black: hsl(0 0% 0%);
 }
 
 * {
@@ -40,10 +41,23 @@ main {
 }
 
 .right {
-  width: 15rem;
+  width: 20rem;
   background-color: green;
 }
 
 footer {
-  background-color: var(--gray);
+  background-color: var(--black);
+  border-top: 2px var(--gray) solid;
+  padding: 0.6rem;
+}
+
+button {
+  background-color: transparent;
+  border-radius: 0.4rem;
+  padding: 1rem;
+  border: none;
+}
+button:hover {
+  background-color: var(--dark-gray);
+  cursor: pointer;
 }

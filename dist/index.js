@@ -7,7 +7,7 @@ const coordinateTransformation = (mouseX, mouseY) => {
     return { x: svgX, y: svgY };
 };
 let mouseIsDown = false;
-const paths = [];
+const drawingPaths = [];
 let currentPath = new Path(svgImage);
 const drawDot = (x, y) => {
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');

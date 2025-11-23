@@ -13,7 +13,7 @@ const coordinateTransformation = (mouseX: number, mouseY: number) => {
 
 let mouseIsDown = false;
 
-const paths = [];
+const drawingPaths = [];
 let currentPath = new Path(svgImage);
 
 const drawDot = (x: number, y: number) => {
@@ -41,7 +41,7 @@ svgImage.addEventListener('mouseup', () => {
 
 svgImage.addEventListener('mousemove', e => {
   if(mouseIsDown) {
-    const {x, y} = coordinateTransformation(e.offsetX, e.offsetY);
+    const { x, y } = coordinateTransformation(e.offsetX, e.offsetY);
     currentPath.addPoint(x, y);
   }
 });
