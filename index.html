@@ -1,28 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>drawing app</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="dist/index.js" type="module"></script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drawing-app</title>
   </head>
   <body>
-    <div class="left">
-      <main>
-        <svg
-        xmlns="http://www.w3.org/2000/svg"  
-        viewBox="0 0 1920 1080"
-          id="svg-image"
-          preserveAspectRatio="xMinYMin slice"
-        >
-          <rect width="100%" height="100%" fill="black" />
-        </svg>
-      </main>
-      <footer>
-        <button>test</button>
-      </footer>
-    </div>
-    <aside class="right">
-      test
-    </aside>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

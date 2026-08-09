@@ -1,5 +1,13 @@
-# drawing-app
+# Run project for development
 
-live version: https://flojoho.github.io/drawing-app/
+```bash
+npm run dev
+```
 
-draw on the canvas by holding down the left mouse button. drawings gets saved to localStorage automatically and loaded again if you revisit the page.
+# Build project
+
+```bash
+npm run build
+```
+
+Then run `npm run preview` to preview the project and see if the build was successful.
