@@ -1,5 +1,7 @@
 import Vector from './Vector.js';
 
+export const lineWidth = 10;
+
 export class Path {
   points: Vector[];
   svgPath: SVGPathElement;
@@ -66,7 +68,5 @@ export class Path {
     }).join(' ');
   }
 }
-
-export const lineWidth = 10;
 
 export default { Path, lineWidth }
